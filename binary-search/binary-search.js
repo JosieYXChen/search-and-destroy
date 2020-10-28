@@ -7,19 +7,40 @@ const binarySearch = (array, target) => {
   //RECURSIVE CASE:
   // Determine if the target is greater or less than the mid point
   //Break array in half and recursively call the correct half (depending on whether it is greater or less than)
-  if (array.length <= 1) {
-    return array[0] === target;
-  } else {
-    const mid = Math.floor(array.length / 2);
-    if (array[mid] === target) {
+
+  // if (array.length <= 1) {
+  //   return array[0] === target;
+  // } else {
+  //   const mid = Math.floor(array.length / 2);
+  //   if (array[mid] === target) {
+  //     return true;
+  //   } else if (array[mid] > target) {
+  //     return binarySearch(array.slice(0, mid), target);
+  //   } else if (array[mid] < target) {
+  //     return binarySearch(array.slice(mid), target);
+  //   }
+  // }
+
+    let startPointer = 0,
+    endPointer = array.length,
+    midPointer = Math.floor((endPointer - startPointer) / 2);
+
+    for(let i = 1; i < (array.length / 2) + 1; i++) {
+    if (target === array[midPointer]) {
       return true;
-    } else if (array[mid] > target) {
-      return binarySearch(array.slice(0, mid), target);
-    } else if (array[mid] < target) {
-      return binarySearch(array.slice(mid, array.length), target);
+    } else if (target > array[midPointer]) {
+      startPointer = midPointer;
+      midPointer = Math.floor((endPointer - startPointer) / 2) + midPointer;
+    } else {
+      endPointer = midPointer;
+      midPointer = Math.floor((endPointer - startPointer) / 2);
     }
   }
+  return false;
 };
+
+
+
 
 /*
 	EXTRA CREDIT:
